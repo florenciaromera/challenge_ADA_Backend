@@ -8,8 +8,7 @@ import ar.com.ada.api.challenge.entities.Boya;
 @Repository
 public interface BoyaRepository extends JpaRepository<Boya, Integer>{
 
-	Boya findByColorLuz(String color);
-
+	
 
     
 }

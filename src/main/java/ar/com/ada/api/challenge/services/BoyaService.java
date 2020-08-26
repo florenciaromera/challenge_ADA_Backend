@@ -50,9 +50,7 @@ public class BoyaService {
         return null;
 
     }
-    public Boya buscarPorColor(String color){
-       return boyaRepo.findByColorLuz(color);
-    }
+
 
     public Boya actualizarBoya(Boya boya){
         return boyaRepo.save(boya);

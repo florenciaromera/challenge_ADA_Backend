@@ -1,6 +1,6 @@
 package ar.com.ada.api.challenge.services;
 
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +67,10 @@ public class MuestraService {
         else
             return null;
 
+    }
+
+    public List<Muestra> buscarTodas(){
+        return muestraRepo.findAll();
     }
 
     // public Muestra buscarMuestraMinima(Integer id) {

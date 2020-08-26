@@ -82,15 +82,19 @@ public class MuestraController {
 
     @GetMapping("/muestras/colores/{color}")
     public ResponseEntity<List<MuestraResponse>> obtenerMuestrasPorColor(@PathVariable String color) {
-        List<Muestra> listaMuestras = boyaService.buscarPorColor(color).getMuestras();
+        
+        List<Muestra> listaMuestras = muestraService.buscarTodas();
  
-List<MuestraResponse> listaMR = new ArrayList<MuestraResponse>();
+List<MuestraResponse> listaMR = new ArrayList<>();
 for (Muestra m : listaMuestras) {
-    MuestraResponse mR = new MuestraResponse();
-    mR.boyaId = m.getBoya().getBoyaId();
-    mR.horario = m.getHorarioMuestra();
-    mR.altura = m.getAltura();
-    listaMR.add(mR);
+    if(m.getBoya().getColorLuz().equalsIgnoreCase(color)){
+        MuestraResponse mR = new MuestraResponse();
+        mR.boyaId = m.getBoya().getBoyaId();
+        mR.horario = m.getHorarioMuestra();
+        mR.altura = m.getAltura();
+        listaMR.add(mR);
+    }
+   
 }
 return ResponseEntity.ok(listaMR);
     }
