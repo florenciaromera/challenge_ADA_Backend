@@ -64,7 +64,7 @@ public class MuestraController {
     }
 
     @DeleteMapping("/muestras/{id}")
-    public ResponseEntity<GenericResponse> bajaEmpleado(@PathVariable int id) {
+    public ResponseEntity<GenericResponse> resetearColor(@PathVariable int id) {
         Muestra muestra = muestraService.buscarPorId(id);
         if (muestra == null) {
             return ResponseEntity.notFound().build();
