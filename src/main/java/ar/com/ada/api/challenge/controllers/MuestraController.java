@@ -3,7 +3,9 @@ package ar.com.ada.api.challenge.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import ar.com.ada.api.challenge.entities.Boya;
 import ar.com.ada.api.challenge.entities.Muestra;
+import ar.com.ada.api.challenge.models.response.AnomaliaResponse;
 import ar.com.ada.api.challenge.models.response.GenericResponse;
 import ar.com.ada.api.challenge.models.response.MuestraMinimaResponse;
 import ar.com.ada.api.challenge.models.response.MuestraResponse;
@@ -107,10 +109,22 @@ ResponseEntity<MuestraMinimaResponse> mostrarMuestaMinima(@PathVariable Integer 
 
 }
 
+// @GetMapping("/muestras/anomalias/{idBoya}")
+// ResponseEntity<AnomaliaResponse> alertaDeAnomalia(@PathVariable Integer idBoya){
+//     AnomaliaResponse aRes = new AnomaliaResponse();
+//     List<Muestra> muestras = boyaService.buscarPorId(idBoya).getMuestras();
+//     muestras = muestraService.buscarAnomalia();
+// }
+
+
+}
+
+
+
+
 
 
 
 
 
     
-}

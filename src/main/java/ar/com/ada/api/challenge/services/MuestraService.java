@@ -1,5 +1,6 @@
 package ar.com.ada.api.challenge.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +42,23 @@ public class MuestraService {
 
     public Muestra buscarPorId(Integer id) {
         Optional<Muestra> opMuestra = muestraRepo.findById(id);
-        
-        if(opMuestra.isPresent())
-        return opMuestra.get();
+
+        if (opMuestra.isPresent())
+            return opMuestra.get();
         else
-        return null;
+            return null;
 
     }
 
-    public Muestra buscarMuestraMinima(Integer id){
-        if(buscarPorId(id) != null){
+    public Muestra buscarMuestraMinima(Integer id) {
+        if (buscarPorId(id) != null) {
             return muestraRepo.muestraAlturaMinima();
         } else
-        return null;
+            return null;
     }
+
+    // public List<Muestra> buscarAnomalia(List<Muestra> muestras) {
+    //     // TODO: Hacer query en el repo para buscar las diferencias entre las muestras
+    // }
 
 }
