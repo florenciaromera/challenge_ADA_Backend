@@ -1,12 +1,13 @@
 package ar.com.ada.api.challenge.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.challenge.entities.Muestra;
+import ar.com.ada.api.challenge.entities.Boya;
+import ar.com.ada.api.challenge.models.request.MuestraReq;
 import ar.com.ada.api.challenge.repos.MuestraRepo;
 
 @Service
@@ -14,26 +15,44 @@ public class MuestraService {
     @Autowired
     MuestraRepo muestraRepo;
 
-    public boolean crearNuevaMuestra(Muestra muestra) {
-        if (muestraRepo.existsById(muestra.getMuestraId()))
-            return false;
-        else
+    @Autowired
+    BoyaService boyaService;
+
+    public Muestra crearNuevaMuestra(MuestraReq muestraReq) {
+        Boya boya = boyaService.buscarPorId(muestraReq.boyaId);
+        if(boya  != null){
+        
+        Muestra muestra = new Muestra();
+        muestra.setAltura(muestraReq.altura);
+        muestra.setHorarioMuestra(muestraReq.horarioMuestra);
+        muestra.setLatitud(muestraReq.latitud);
+        muestra.setLongitud(muestraReq.longitud);
+        muestra.setMatriculaEmbarcacion(muestraReq.matriculaEmbarcacion);
+        muestra.setBoya(boya);
             grabarMuestra(muestra);
-        return true;
+            return muestra;
+        }else{
+            return null;
+        }
+
+        
 
     }
 
     public void grabarMuestra(Muestra muestra) {
-        if (muestra.getAltura() > 50 || muestra.getAltura() < -50) {
-            muestra.getBoya().setColorLuz("AMARILLO");
+        double alt =muestra.getAltura();
+        Boya boya = muestra.getBoya();
+    
+        if (alt> -50  && alt< 50 ) {
+            boya.setColorLuz("VERDE");
             muestraRepo.save(muestra);
         }
-        if (muestra.getAltura() < 100 || muestra.getAltura() < -100) {
-            muestra.getBoya().setColorLuz("ROJO");
+        if (alt> -100 && alt<100) {
+            boya.setColorLuz("AMARILLO");
             muestraRepo.save(muestra);
 
         } else {
-            muestra.getBoya().setColorLuz("VERDE");
+            boya.setColorLuz("ROJO");
             muestraRepo.save(muestra);
 
         }
@@ -50,12 +69,12 @@ public class MuestraService {
 
     }
 
-    public Muestra buscarMuestraMinima(Integer id) {
-        if (buscarPorId(id) != null) {
-            return muestraRepo.muestraAlturaMinima();
-        } else
-            return null;
-    }
+    // public Muestra buscarMuestraMinima(Integer id) {
+    //     if (buscarPorId(id) != null) {
+    //         return muestraRepo.muestraAlturaMinima();
+    //     } else
+    //         return null;
+    // }
 
     // public List<Muestra> buscarAnomalia(List<Muestra> muestras) {
     //     // TODO: Hacer query en el repo para buscar las diferencias entre las muestras

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.challenge.entities.Boya;
 import ar.com.ada.api.challenge.repos.BoyaRepository;
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @Service
 public class BoyaService {
@@ -16,16 +15,14 @@ public class BoyaService {
     @Autowired
     BoyaRepository boyaRepo;
 
+
     public boolean crearNuevaBoya(Boya boya) {
-        if (boyaRepo.existsById(boya.getBoyaId()))
-            return false;
-        else
             boyaRepo.save(boya);
         return true;
 
     }
 
-    public Boya crearNuevaBoya(Double longitud, Double latitud) {
+    public Boya crearNuevaBoya(Double longitud, double latitud) {
 
         Boya boya = new Boya();
         boya.setLatitudInstalacion(latitud);

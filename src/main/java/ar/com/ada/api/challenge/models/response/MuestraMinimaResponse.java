@@ -5,7 +5,7 @@ import java.util.Date;
 public class MuestraMinimaResponse {
     
     public String color;
-    public Double alturaNivelDelMarMinima;
+    public double alturaNivelDelMarMinima;
     public Date horario;
     
 }

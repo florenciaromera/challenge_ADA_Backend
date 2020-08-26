@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name="muestra")
 public class Muestra {
@@ -15,75 +14,115 @@ public class Muestra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer muestraId;
     @ManyToOne
-    @JoinColumn(name = "boya_id", referencedColumnName = "boya_id")
+    @JoinColumn(name ="boya_id", referencedColumnName ="boya_id")
     private Boya boya;
     @Column(name="horario_muestra")
     private Date horarioMuestra;
     @Column(name="matricula_embarcacion")
     private String matriculaEmbarcacion;
-
-    private Double longitud;
-    private Double latitud;
-    private Double altura;
+    private double longitud;
+    private double latitud;
+    private double altura;
 
 
     //Getters y Setters
+ /**
+     * @return the muestraId
+     */
     public Integer getMuestraId() {
         return muestraId;
     }
 
+    /**
+     * @param muestraId the muestraId to set
+     */
     public void setMuestraId(Integer muestraId) {
         this.muestraId = muestraId;
     }
 
-    public Boya getBoya() {
-        return boya;
-    }
-
-    public void setBoya(Boya boya) {
-        this.boya = boya;
-        this.boya.getMuestras().add(this);
-    }
-
+    /**
+     * @return the horaMuestra
+     */
     public Date getHorarioMuestra() {
         return horarioMuestra;
     }
 
+    /**
+     * @param horarioMuestra the horaMuestra to set
+     */
     public void setHorarioMuestra(Date horarioMuestra) {
         this.horarioMuestra = horarioMuestra;
     }
 
+    /**
+     * @return the matricula
+     */
     public String getMatriculaEmbarcacion() {
         return matriculaEmbarcacion;
     }
 
+    /**
+     * @param matriculaEmbarcacion the matricula to set
+     */
     public void setMatriculaEmbarcacion(String matriculaEmbarcacion) {
         this.matriculaEmbarcacion = matriculaEmbarcacion;
     }
 
-    public Double getLongitud() {
+    /**
+     * @return the longitud
+     */
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
+    /**
+     * @param longitud the longitud to set
+     */
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
-    public Double getLatitud() {
+    /**
+     * @return the latitud
+     */
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Double latitud) {
+    /**
+     * @param latitud the latitud to set
+     */
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public Double getAltura() {
+    /**
+     * @return the msnm
+     */
+    public double getAltura() {
         return altura;
     }
 
-    public void setAltura(Double altura) {
+    /**
+     * @param altura the msnm to set
+     */
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 
+    /**
+     * @return the boya
+     */
+    public Boya getBoya() {
+        return boya;
+    }
+
+    /**
+     * @param boya the boya to set
+     */
+    public void setBoya(Boya boya) {
+        this.boya = boya;
+        this.boya.getMuestras().add(this);
+    }
     
 }

@@ -1,5 +1,4 @@
 package ar.com.ada.api.challenge.entities;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +7,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="boya")
-public class Boya {
+@Table(name="boya")public class Boya {
 //Atributos
     @Id
     @Column(name="boya_id")
@@ -18,10 +16,9 @@ public class Boya {
     @Column(name="color_luz")
     private String colorLuz;
     @Column(name="longitud_instalacion")
-    private Double longitudInstalacion;
-    @Column(name="ñatitud_instalacion")
-    private Double latitudInstalacion;
-
+    private double longitudInstalacion;
+    @Column(name="latitud_instalacion")
+    private double latitudInstalacion;
     @OneToMany(mappedBy = "boya", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<Muestra> muestras = new ArrayList<>();
@@ -44,19 +41,19 @@ public class Boya {
         this.colorLuz = colorLuz;
     }
 
-    public Double getLongitudInstalacion() {
+    public double getLongitudInstalacion() {
         return longitudInstalacion;
     }
 
-    public void setLongitudInstalacion(Double longitudInstalacion) {
+    public void setLongitudInstalacion(double longitudInstalacion) {
         this.longitudInstalacion = longitudInstalacion;
     }
 
-    public Double getLatitudInstalacion() {
+    public double getLatitudInstalacion() {
         return latitudInstalacion;
     }
 
-    public void setLatitudInstalacion(Double latitudInstalacion) {
+    public void setLatitudInstalacion(double latitudInstalacion) {
         this.latitudInstalacion = latitudInstalacion;
     }
 

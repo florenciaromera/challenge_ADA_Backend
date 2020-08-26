@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class AnomaliaResponse {
 
-    public Double alturaNivelDelMarActual;
+    public double alturaNivelDelMarActual;
     public Date horarioInicioAnomalia;
     public Date horarioInicioFinAnomalia;
     public Integer tipoAlerta;

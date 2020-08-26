@@ -9,6 +9,7 @@ import ar.com.ada.api.challenge.models.response.AnomaliaResponse;
 import ar.com.ada.api.challenge.models.response.GenericResponse;
 import ar.com.ada.api.challenge.models.response.MuestraMinimaResponse;
 import ar.com.ada.api.challenge.models.response.MuestraResponse;
+import ar.com.ada.api.challenge.models.request.MuestraReq;
 import ar.com.ada.api.challenge.services.BoyaService;
 import ar.com.ada.api.challenge.services.MuestraService;
 
@@ -35,14 +36,15 @@ public class MuestraController {
     
     
     @PostMapping(value="/muestras")
-    public ResponseEntity<GenericResponse> registrarMuestra(@RequestBody Muestra muestra) {
+    public ResponseEntity<GenericResponse> registrarMuestra(@RequestBody MuestraReq muestra) {
         
         GenericResponse gR = new GenericResponse();
-        boolean muestraRegistrada = muestraService.crearNuevaMuestra(muestra);
 
-        if (muestraRegistrada) {
-          gR.id = muestra.getMuestraId();
-          gR.message = muestra.getBoya().getColorLuz();
+        Muestra muestraRegistrada = muestraService.crearNuevaMuestra(muestra);
+
+        if (muestraRegistrada != null) {
+          gR.id = muestraRegistrada.getMuestraId();
+          gR.message = muestraRegistrada.getBoya().getColorLuz();
             
             return ResponseEntity.ok(gR);
         } else {
@@ -93,21 +95,21 @@ for (Muestra m : listaMuestras) {
 return ResponseEntity.ok(listaMR);
     }
 
-@GetMapping("/muestras/minima/{idBoya}")
-ResponseEntity<MuestraMinimaResponse> mostrarMuestaMinima(@PathVariable Integer idBoya){
-    MuestraMinimaResponse mMR = new MuestraMinimaResponse();
-    Muestra muestraMinima = muestraService.buscarMuestraMinima(idBoya);
+// @GetMapping("/muestras/minima/{idBoya}")
+// ResponseEntity<MuestraMinimaResponse> mostrarMuestaMinima(@PathVariable Integer idBoya){
+//     MuestraMinimaResponse mMR = new MuestraMinimaResponse();
+//     Muestra muestraMinima = muestraService.buscarMuestraMinima(idBoya);
 
-    if(muestraMinima != null){
-        mMR.color = muestraMinima.getBoya().getColorLuz();
-        mMR.alturaNivelDelMarMinima= muestraMinima.getAltura();
-        mMR.horario = muestraMinima.getHorarioMuestra();
-        return ResponseEntity.ok(mMR);
-    }else 
-    return ResponseEntity.badRequest().build();
+//     if(muestraMinima != null){
+//         mMR.color = muestraMinima.getBoya().getColorLuz();
+//         mMR.alturaNivelDelMarMinima= muestraMinima.getAltura();
+//         mMR.horario = muestraMinima.getHorarioMuestra();
+//         return ResponseEntity.ok(mMR);
+//     }else 
+//     return ResponseEntity.badRequest().build();
 
 
-}
+// }
 
 // @GetMapping("/muestras/anomalias/{idBoya}")
 // ResponseEntity<AnomaliaResponse> alertaDeAnomalia(@PathVariable Integer idBoya){

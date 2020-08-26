@@ -6,7 +6,7 @@ public class MuestraResponse {
     
     public Integer boyaId;
     public Date horario;
-    public Double altura;
+    public double altura;
     
 
 }

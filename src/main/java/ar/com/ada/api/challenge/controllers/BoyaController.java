@@ -1,6 +1,5 @@
 package ar.com.ada.api.challenge.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.ada.api.challenge.entities.Boya;
-import ar.com.ada.api.challenge.models.request.BoyaRequest;
 import ar.com.ada.api.challenge.models.request.ModifBoyaReq;
 import ar.com.ada.api.challenge.models.response.GenericResponse;
 import ar.com.ada.api.challenge.services.BoyaService;
@@ -35,6 +33,7 @@ public class BoyaController {
         if (boyaCreada) {
             gR.isOk = true;
             gR.message = "Creaste la boya exitosamente.";
+            gR.id = boya.getBoyaId();
             return ResponseEntity.ok(gR);
         } else {
 
@@ -48,9 +47,7 @@ public class BoyaController {
     @GetMapping("/boyas")
     ResponseEntity<List<Boya>> listarBoyas() {
 
-        List<Boya> boyas = new ArrayList<>();
-
-        boyas = boyaService.obtenerBoyas();
+        List<Boya> boyas = boyaService.obtenerBoyas();
 
         return ResponseEntity.ok(boyas);
 
@@ -70,17 +67,18 @@ public class BoyaController {
     ResponseEntity<GenericResponse> actualizarBoya(@PathVariable Integer id, @RequestBody ModifBoyaReq modifBoya) {
         GenericResponse gR = new GenericResponse();
         Boya boya = boyaService.buscarPorId(id);
+        
         if (boya == null) {
             return ResponseEntity.notFound().build();
-        } else {
-            boya.setColorLuz(modifBoya.color);
-            Boya boyaActualizada = boyaService.actualizarBoya(boya);
+        } 
+            boya.setColorLuz(modifBoya.colorLuz);
+            boyaService.crearNuevaBoya(boya);
             gR.isOk = true;
-            gR.id = boyaActualizada.getBoyaId();
+            gR.id = boya.getBoyaId();
             gR.message = "El color de la Luz de la Boya ha sido actualizado";
             return ResponseEntity.ok(gR);
 
-        }
+        
     }
 
 }
