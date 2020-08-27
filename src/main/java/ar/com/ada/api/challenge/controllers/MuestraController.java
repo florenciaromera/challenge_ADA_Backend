@@ -99,35 +99,66 @@ for (Muestra m : listaMuestras) {
 return ResponseEntity.ok(listaMR);
     }
 
-// @GetMapping("/muestras/minima/{idBoya}")
-// ResponseEntity<MuestraMinimaResponse> mostrarMuestaMinima(@PathVariable Integer idBoya){
-//     MuestraMinimaResponse mMR = new MuestraMinimaResponse();
-//     Muestra muestraMinima = muestraService.buscarMuestraMinima(idBoya);
+ @GetMapping("/muestras/minima/{idBoya}")
+ ResponseEntity<MuestraMinimaResponse> mostrarMuestaMinima(@PathVariable Integer idBoya){
+     MuestraMinimaResponse mMR = new MuestraMinimaResponse();
 
-//     if(muestraMinima != null){
-//         mMR.color = muestraMinima.getBoya().getColorLuz();
-//         mMR.alturaNivelDelMarMinima= muestraMinima.getAltura();
-//         mMR.horario = muestraMinima.getHorarioMuestra();
-//         return ResponseEntity.ok(mMR);
-//     }else 
-//     return ResponseEntity.badRequest().build();
+     double muestraMinima = 0;
+     Muestra m = new Muestra();
+     for(Muestra muestra : boyaService.buscarPorId(idBoya).getMuestras()){
+         if(muestra.getAltura() < muestraMinima){
+             m = muestra;
+             muestraMinima = muestra.getAltura();
 
+             mMR.color = m.getBoya().getColorLuz();
+             mMR.alturaNivelDelMarMinima = m.getAltura();
+             mMR.horario = m.getHorarioMuestra();
+         }
 
-// }
-
-// @GetMapping("/muestras/anomalias/{idBoya}")
-// ResponseEntity<AnomaliaResponse> alertaDeAnomalia(@PathVariable Integer idBoya){
-//     AnomaliaResponse aRes = new AnomaliaResponse();
-//     List<Muestra> muestras = boyaService.buscarPorId(idBoya).getMuestras();
-//     muestras = muestraService.buscarAnomalia();
-// }
-
-
+     }
+     return ResponseEntity.ok(mMR);
 }
 
+@GetMapping("/api/muestras/anomalias/{idBoya}")
+public ResponseEntity<?> alertaDeAnomalias(@PathVariable Integer idBoya) {
+    List<Muestra> muestras = boyaService.buscarPorId(idBoya).getMuestras();
+    AnomaliaResponse anomalia = new AnomaliaResponse();
+    for (int i = 1; i < muestras.size(); i++) {
+        Muestra m = new Muestra();
+        m = muestras.get(i);
+        long horaI = m.getHorarioMuestra().getTime();
+        double alturaI = m.getAltura();
+        for (int j = 0; j < muestras.size() - 1; j++) {
+            Muestra m2 = new Muestra();
+            m2 = muestras.get(j);
+            long horaF = m2.getHorarioMuestra().getTime();
+            double alturaF = m2.getAltura();
 
+            long rTiempo = Math.abs(horaF) - Math.abs(horaI);
+            double alt1 = Math.abs(alturaI);
+            double alt2= Math.abs(alturaF);
+            double altResta = Math.abs(alturaF)-Math.abs(alturaI);
+            
+            if ((rTiempo >= 600000) && (alt1>=200 && alt2>=200)) {
 
+                anomalia.horarioInicioAnomalia = m.getHorarioMuestra();
+                anomalia.horarioInicioFinAnomalia = m2.getHorarioMuestra();
+                anomalia.alturaNivelDelMarActual = m2.getAltura();
+                anomalia.tipoAlerta = "ALERTA DE KAIJU";
+            }
+            if(altResta >=500){
+                anomalia.horarioInicioAnomalia = m.getHorarioMuestra();
+                anomalia.horarioInicioFinAnomalia = m2.getHorarioMuestra();
+                anomalia.alturaNivelDelMarActual = m2.getAltura();
+                anomalia.tipoAlerta = "ALERTA DE IMPACTO";
+            }
+        }
 
+    }
+    return ResponseEntity.ok(anomalia);
+}
+
+}
 
 
 

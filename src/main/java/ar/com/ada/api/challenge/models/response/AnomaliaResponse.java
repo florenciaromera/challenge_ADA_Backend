@@ -7,7 +7,7 @@ public class AnomaliaResponse {
     public double alturaNivelDelMarActual;
     public Date horarioInicioAnomalia;
     public Date horarioInicioFinAnomalia;
-    public Integer tipoAlerta;
+    public String tipoAlerta;
     
     
 }

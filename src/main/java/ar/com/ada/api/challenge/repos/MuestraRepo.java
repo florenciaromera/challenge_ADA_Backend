@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 import ar.com.ada.api.challenge.entities.Muestra;
 @Repository
 public interface MuestraRepo extends JpaRepository<Muestra,Integer> {
-    
-    //  @Query("Select m From muestra where m.altura = MIN(altura)")
-    // Muestra muestraAlturaMinima();
+
 }

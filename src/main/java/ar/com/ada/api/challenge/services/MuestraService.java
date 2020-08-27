@@ -73,15 +73,6 @@ public class MuestraService {
         return muestraRepo.findAll();
     }
 
-    // public Muestra buscarMuestraMinima(Integer id) {
-    //     if (buscarPorId(id) != null) {
-    //         return muestraRepo.muestraAlturaMinima();
-    //     } else
-    //         return null;
-    // }
 
-    // public List<Muestra> buscarAnomalia(List<Muestra> muestras) {
-    //     // TODO: Hacer query en el repo para buscar las diferencias entre las muestras
-    // }
 
 }
